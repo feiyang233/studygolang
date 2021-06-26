@@ -10,50 +10,38 @@
 
 ## 本地搭建一个 Go语言中文网
 
-要求 Go 1.11+
+要求 Go 1.12+ , [docker](https://docs.docker.com/engine/install/)
 
-1、下载源码到本地某个目录
-
-```shell
-git clone https://github.com/studygolang/studygolang
-```
-
-2、编译
-
-进入 studygolang 项目目录，执行如下命令：
+1.下载源码到本地某个目录
 
 ```shell
-// unix
-make build
-// windows
-install.bat
+git clone git@github.com:feiyang233/studygolang.git
 ```
 
-这样便编译好了 studygolang
-
-3、在 studygolang 源码中的 bin 目录下应该有了 studygolang 可执行文件。
-
-接下来启动 studygolang。
-
+2.进入 studygolang 项目目录，执行如下命令：运行 docker
 ```shell
-// unix
-make start
-// windows
-start.bat
+cd studygolang
+
+git checkout run_local
+
+docker-compose up
 ```
-
-或者
-
+docker 启动三个 containers, 一个是 app, 一个是数据库 mysql， 一个是缓存 redis。
+配置文件在 `config` 文件夹下面。 
 ```shell
-// unix
-bin/studygolang
-// windows
-bin\studygolang.exe
+➜  config git:(run_local) ✗ tree .                                                                                                                                                      <aws:default>
+.
+|-- db.sql
+|-- env.ini
+|-- env.sample.ini
+|-- init.sql
+`-- solr_schema.xml
 ```
+env.ini 里面的密码要和 docker-compose.yml  保持一致
 
 一切顺利的话，studygolang 应该就启动了。
 
-4、验证
+3. 验证
 
 在浏览器中输入：http://127.0.0.1:8088
 
@@ -70,4 +58,4 @@ fork + PR。如果有修改 js 和 css，请执行 gulp （需要先安装 gulp�
 ## 使用该项目搭建的网站
 
 - [Go语言中文网](https://studygolang.com)
-- [Kotlin中国](https://kotlintc.com)
+- [我自己瞎搞的](http://118.24.111.186:8088/)
