@@ -7,17 +7,25 @@ services:
       dockerfile: Dockerfile
     ports:
       - 8088:8088
-    networks:
-      - default
-      - app_net
-    external_links:
-      - redis:redis
-      - mysql:mysql
+    depends_on:
+      - db
+      - redis
     volumes:
       - ./static:/app/studygolang/static
       - ./template:/app/studygolang/template
       - ./log:/app/studygolang/log
 
-networks:
-  app_net:
-    external: true
+  db:
+    image: "mysql:5.7.26"
+    container_name: go-mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: myrootpassword
+      MYSQL_DATABASE: studygolang
+      MYSQL_USER: studygolang
+      MYSQL_PASSWORD: studygolangpassword
+
+  redis:
+    image: "redis:alpine"
+    container_name: go-redis
+    command: redis-server --requirepass sOmE_sEcUrE_pAsS
